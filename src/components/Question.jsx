@@ -5,6 +5,7 @@ import QUESTIONS from "../questions.js";
 
 const Question = ({ index, onSelectAnswer, onSkip }) => {
   const [answer, setAnswer] = useState({ selectedAnswer: "", isCorrect: null });
+  let timer = 10000;
 
   const handleSelectAnswer = (answer) => {
     setAnswer({
@@ -18,10 +19,17 @@ const Question = ({ index, onSelectAnswer, onSkip }) => {
         isCorrect: answer === QUESTIONS[index].answers[0],
       });
 
+      if (answer.selectedAnswer) {
+        timer = 1000;
+      }
+      if (answer.isCorrect !== null) {
+        timer = 2000;
+      }
+
       setTimeout(() => {
         onSelectAnswer(answer);
-      }, 2000);
-    }, 1000);
+      }, 1000);
+    }, 2000);
   };
 
   let answerState = "";
@@ -29,12 +37,17 @@ const Question = ({ index, onSelectAnswer, onSkip }) => {
   if (answer.selectedAnswer && answer.isCorrect !== null) {
     answerState = answer.isCorrect ? "correct" : "wrong";
   } else if (answer.selectedAnswer) {
-    answerState = "selected";
+    answerState = "answered";
   }
 
   return (
     <div id="question">
-      <QuestionTimer timer={5000} onTimeout={onSkip} />
+      <QuestionTimer
+        key={timer}
+        timer={timer}
+        onTimeout={answer.selectedAnswer === "" ? onSkip : null}
+        mode={answerState}
+      />
       <h2>{QUESTIONS[index].text}</h2>
       <Answers
         answers={QUESTIONS[index].answers}

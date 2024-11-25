@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const QuestionTimer = ({ timer, onTimeout }) => {
+const QuestionTimer = ({ timer, onTimeout, mode }) => {
   const [remainingTime, setRemainingTime] = useState(timer);
 
   useEffect(() => {
