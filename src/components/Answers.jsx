@@ -1,17 +1,15 @@
-import { useRef } from "react";
+import { useMemo } from "react";
 
 const Answers = ({ answers, selectedAnswer, answerState, onSelect }) => {
-  const shuffeledAnswers = useRef();
-
-  if (!shuffeledAnswers.current) {
-    shuffeledAnswers.current = [...answers];
-    shuffeledAnswers.current.sort(() => Math.random - 0.5);
-  }
+  const shuffledAnswers = useMemo(() => {
+    const shuffledAnswers = [...answers].sort(() => Math.random() - 0.5);
+    return shuffledAnswers;
+  }, [answers]);
 
   return (
     <>
       <ul id="answers">
-        {shuffeledAnswers.current.map((answer) => {
+        {shuffledAnswers.map((answer) => {
           let cssClasses = "";
           const isSelected = answer === selectedAnswer;
 

@@ -5,7 +5,7 @@ import QUESTIONS from "../questions.js";
 
 const Question = ({ index, onSelectAnswer, onSkip }) => {
   const [answer, setAnswer] = useState({ selectedAnswer: "", isCorrect: null });
-  let timer = 10000;
+  const [timer, setTimer] = useState(10000);
 
   const handleSelectAnswer = (answer) => {
     setAnswer({
@@ -20,16 +20,16 @@ const Question = ({ index, onSelectAnswer, onSkip }) => {
       });
 
       if (answer.selectedAnswer) {
-        timer = 1000;
+        setTimer(1000);
       }
       if (answer.isCorrect !== null) {
-        timer = 2000;
+        setTimer(2000);
       }
 
       setTimeout(() => {
         onSelectAnswer(answer);
-      }, 1000);
-    }, 2000);
+      }, 2000);
+    }, 1000);
   };
 
   let answerState = "";
