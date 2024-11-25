@@ -15,8 +15,8 @@ const Answers = ({ answers, selectedAnswer, answerState, onSelect }) => {
           let cssClasses = "";
           const isSelected = answer === selectedAnswer;
 
-          if (answerState !== "answered" && isSelected) {
-            cssClasses = "answered";
+          if (answerState !== "selected" && isSelected) {
+            cssClasses = "selected";
           }
 
           if (
@@ -28,7 +28,11 @@ const Answers = ({ answers, selectedAnswer, answerState, onSelect }) => {
 
           return (
             <li key={answer} className="answer">
-              <button className={cssClasses} onClick={() => onSelect(answer)}>
+              <button
+                className={cssClasses}
+                onClick={() => onSelect(answer)}
+                disabled={answerState !== ""}
+              >
                 {answer}
               </button>
             </li>
